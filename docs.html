@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAMAWEB Documentation - Complete Guide</title>
+    <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6831e3b4fdbf6684af1868b6_ChatGPT%20Image%20May%2024%2C%202025%2C%2004_20_15%20PM.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #ff4757;
+            --primary-dark: #ff3742;
+            --secondary: #ff6b7a;
+            --accent: #ffa502;
+            --bg-dark: #2f1b14;
+            --bg-card: #3d2817;
+            --bg-light: #4a321b;
+            --text-primary: #ffeaa7;
+            --text-secondary: #fdcb6e;
+            --border: #6c5ce7;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --code-bg: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #2d1b13 50%, #3d2817 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background: rgba(47, 27, 20, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--primary);
+            padding: 16px 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(255, 71, 87, 0.3);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 32px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 32px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 60px 0;
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(255, 165, 2, 0.1));
+            border-radius: 20px;
+            border: 2px solid var(--primary);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 16px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .toc {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 60px;
+        }
+
+        .toc h2 {
+            color: var(--accent);
+            font-size: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .toc-item {
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .toc-item a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .toc-item a:hover {
+            color: var(--accent);
+        }
+
+        .section {
+            margin-bottom: 80px;
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(255, 71, 87, 0.2);
+        }
+
+        .section h2 {
+            color: var(--primary);
+            font-size: 32px;
+            margin-bottom: 32px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 16px;
+        }
+
+        .section h3 {
+            color: var(--accent);
+            font-size: 24px;
+            margin: 32px 0 16px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .section h4 {
+            color: var(--text-primary);
+            font-size: 18px;
+            margin: 24px 0 12px 0;
+        }
+
+        .equation {
+            background: var(--code-bg);
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: center;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .equation::before {
+            content: 'FORMULA';
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--accent);
+            color: var(--bg-dark);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .equation-title {
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+
+        .math {
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .variables {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: left;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+            margin-top: 16px;
+        }
+
+        .variables strong {
+            color: var(--accent);
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, rgba(255, 165, 2, 0.1), rgba(255, 71, 87, 0.1));
+            border: 3px solid var(--accent);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 32px 0;
+            text-align: center;
+        }
+
+        .big-formula {
+            font-size: 24px;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: var(--bg-light);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+        }
+
+        .table th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 16px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .table tr:nth-child(even) {
+            background: rgba(255, 71, 87, 0.05);
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            color: var(--text-primary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, var(--accent), #ff9f43);
+            color: var(--bg-dark);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .warning {
+            background: rgba(253, 203, 110, 0.1);
+            border: 2px solid var(--warning);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            border-left: 6px solid var(--warning);
+        }
+
+        .warning h4 {
+            color: var(--warning);
+            margin-bottom: 8px;
+        }
+
+        .info {
+            background: rgba(255, 71, 87, 0.1);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            border-left: 6px solid var(--primary);
+        }
+
+        .info h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .card {
+            background: rgba(255, 71, 87, 0.1);
+            border: 2px solid rgba(255, 71, 87, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.3);
+        }
+
+        .card h4 {
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 0 16px;
+            }
+
+            .container {
+                padding: 20px 16px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .section {
+                padding: 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6831e389ef773b4eeff086cd_Tamaweb-24-05-2025.png" alt="Tamaweb Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#earning">Earning System</a></li>
+                <li><a href="#tokenomics">Tokenomics</a></li>
+                <li><a href="#api">API</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>TAMAWEB DOCUMENTATION</h1>
+            <p>Complete technical documentation for the $TAMA earning system, smart contracts, and gameplay mechanics</p>
+        </div>
+
+        <div class="toc">
+            <h2>📋 Table of Contents</h2>
+            <div class="toc-grid">
+                <div class="toc-item">
+                    <a href="#overview">🎯 Project Overview</a>
+                    <p>Game mechanics and core concepts</p>
+                </div>
+                <div class="toc-item">
+                    <a href="#earning">💰 Earning System</a>
+                    <p>Mathematical formulas for $TAMA rewards</p>
+                </div>
+                <div class="toc-item">
+                    <a href="#tokenomics">📊 Tokenomics</a>
+                    <p>Supply distribution and burn mechanics</p>
+                </div>
+                <div class="toc-item">
+                    <a href="#multipliers">⚡ Multipliers & Bonuses</a>
+                    <p>Boost calculations and streak rewards</p>
+                </div>
+                <div class="toc-item">
+                    <a href="#staking">🏦 Staking System</a>
+                    <p>Compound interest and yield farming</p>
+                </div>
+                <div class="toc-item">
+                    <a href="#governance">🗳️ Governance</a>
+                    <p>DAO voting power calculations</p>
+                </div>
+                <div class="toc-item">
+                    <a href="#api">🔧 API Reference</a>
+                    <p>Smart contract functions</p>
+                </div>
+                <div class="toc-item">
+                    <a href="#security">🛡️ Security</a>
+                    <p>Audit reports and safety measures</p>
+                </div>
+            </div>
+        </div>
+
+        <section id="overview" class="section">
+            <h2>🎯 Project Overview</h2>
+            
+            <h3>Game Mechanics</h3>
+            <p>TAMAWEB is a play-to-earn virtual pet game where players care for digital pets and earn $TAMA tokens through various activities. The earning system is designed with sophisticated mathematical models to ensure sustainable tokenomics and fair reward distribution.</p>
+
+            <div class="info">
+                <h4>Core Activities</h4>
+                <p>Players earn $TAMA through: pet care actions, mini-game completions, daily login streaks, social interactions, and achievement unlocks.</p>
+            </div>
+
+            <h3>Token Utility</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>💎 Primary Utility</h4>
+                    <ul>
+                        <li>Pet food and care items</li>
+                        <li>Cosmetic upgrades</li>
+                        <li>Game speed boosts</li>
+                        <li>Premium features access</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🏛️ Governance</h4>
+                    <ul>
+                        <li>Vote on game updates</li>
+                        <li>Proposal submission</li>
+                        <li>Community fund allocation</li>
+                        <li>Parameter adjustments</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>💰 DeFi Integration</h4>
+                    <ul>
+                        <li>Liquidity provision</li>
+                        <li>Yield farming</li>
+                        <li>Cross-chain bridging</li>
+                        <li>DEX trading</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="earning" class="section">
+            <h2>💰 $TAMA Earning System</h2>
+            
+            <h3>Base Earning Formula</h3>
+            <div class="formula-box">
+                <div class="big-formula">
+                    R = B × A × H × S × T × D
+                </div>
+                <p>Where R = Total $TAMA Reward per Action</p>
+            </div>
+
+            <div class="equation">
+                <div class="equation-title">Pet Care Reward Calculation</div>
+                <div class="math">
+                    Reward = BaseRate × (1 + HappinessBonus) × ActivityMultiplier × TimeDecay
+                </div>
+                <div class="variables">
+                    <strong>BaseRate:</strong> 0.001 - 0.025 $TAMA per action<br>
+                    <strong>HappinessBonus:</strong> 0% - 50% based on pet happiness (0-100)<br>
+                    <strong>ActivityMultiplier:</strong> Varies by action type<br>
+                    <strong>TimeDecay:</strong> Prevents spam, resets every 300 seconds
+                </div>
+            </div>
+
+            <h3>Activity-Specific Multipliers</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Base Rate</th>
+                        <th>Multiplier</th>
+                        <th>Cooldown</th>
+                        <th>Max Daily</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Feeding</td>
+                        <td>0.008 $TAMA</td>
+                        <td>1.0x</td>
+                        <td>5 minutes</td>
+                        <td>50 actions</td>
+                    </tr>
+                    <tr>
+                        <td>Playing</td>
+                        <td>0.012 $TAMA</td>
+                        <td>1.2x</td>
+                        <td>3 minutes</td>
+                        <td>100 actions</td>
+                    </tr>
+                    <tr>
+                        <td>Cleaning</td>
+                        <td>0.006 $TAMA</td>
+                        <td>0.8x</td>
+                        <td>10 minutes</td>
+                        <td>20 actions</td>
+                    </tr>
+                    <tr>
+                        <td>Training</td>
+                        <td>0.015 $TAMA</td>
+                        <td>1.5x</td>
+                        <td>15 minutes</td>
+                        <td>30 actions</td>
+                    </tr>
+                    <tr>
+                        <td>Mini-Games</td>
+                        <td>0.020 $TAMA</td>
+                        <td>2.0x</td>
+                        <td>2 minutes</td>
+                        <td>200 actions</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Happiness Bonus Calculation</h3>
+            <div class="equation">
+                <div class="equation-title">Happiness Impact on Rewards</div>
+                <div class="math">
+                    HappinessMultiplier = 1 + (PetHappiness / 200)
+                </div>
+                <div class="math">
+                    Where PetHappiness ∈ [0, 100]
+                </div>
+                <div class="variables">
+                    <strong>At 0 Happiness:</strong> 1.0x multiplier (no bonus)<br>
+                    <strong>At 50 Happiness:</strong> 1.25x multiplier (+25% bonus)<br>
+                    <strong>At 100 Happiness:</strong> 1.5x multiplier (+50% bonus)
+                </div>
+            </div>
+
+            <h3>Time Decay Anti-Spam Mechanism</h3>
+            <div class="equation">
+                <div class="equation-title">Reward Decay Over Time</div>
+                <div class="math">
+                    TimeDecay = max(0.1, 1 - (ActionCount / MaxActions)²)
+                </div>
+                <div class="variables">
+                    <strong>ActionCount:</strong> Number of actions in current 5-minute window<br>
+                    <strong>MaxActions:</strong> 10 actions per 5-minute period<br>
+                    <strong>Minimum Multiplier:</strong> 0.1x (10% of base reward)
+                </div>
+            </div>
+
+            <div class="warning">
+                <h4>⚠️ Anti-Bot Protection</h4>
+                <p>The system implements multiple layers of bot protection including: action timing analysis, pattern recognition, CAPTCHA verification for high-frequency users, and wallet behavior analysis.</p>
+            </div>
+        </section>
+
+        <section id="tokenomics" class="section">
+            <h2>📊 Advanced Tokenomics</h2>
+            
+            <h3>Supply Distribution</h3>
+            <div class="formula-box">
+                <div class="big-formula">
+                    Total Supply = 1,000,000,000 $TAMA
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h4>🎮 Play-to-Earn Pool (20%)</h4>
+                    <p><span class="highlight">200,000,000 $TAMA</span></p>
+                    <p>Distributed over 3 years with decreasing emission rates</p>
+                </div>
+                <div class="card">
+                    <h4>💧 Liquidity Pool (70%)</h4>
+                    <p><span class="highlight">700,000,000 $TAMA</span></p>
+                    <p>Massive liquidity on Jupiter and Raydium DEXs</p>
+                </div>
+                <div class="card">
+                    <h4>🛠️ Development (5%)</h4>
+                    <p><span class="highlight">50,000,000 $TAMA</span></p>
+                    <p>Vested over 2 years for continued development</p>
+                </div>
+                <div class="card">
+                    <h4>📢 Marketing (5%)</h4>
+                    <p><span class="highlight">50,000,000 $TAMA</span></p>
+                    <p>Community incentives and partnerships</p>
+                </div>
+            </div>
+
+            <h3>Emission Schedule</h3>
+            <div class="equation">
+                <div class="equation-title">Daily Emission Calculation</div>
+                <div class="math">
+                    DailyEmission = InitialRate × (0.985)^DayNumber
+                </div>
+                <div class="variables">
+                    <strong>InitialRate:</strong> 300,000 $TAMA per day<br>
+                    <strong>Decay Rate:</strong> 1.5% reduction daily<br>
+                    <strong>Half-life:</strong> ~46 days<br>
+                    <strong>Total Distribution Period:</strong> 3 years
+                </div>
+            </div>
+
+            <h3>Burn Mechanisms</h3>
+            <div class="equation">
+                <div class="equation-title">Transaction Burn Formula</div>
+                <div class="math">
+                    BurnAmount = TransactionValue × BurnRate × DemandMultiplier
+                </div>
+                <div class="variables">
+                    <strong>BurnRate:</strong> 2% of all in-game purchases<br>
+                    <strong>DemandMultiplier:</strong> 1.0x - 3.0x based on trading volume<br>
+                    <strong>Monthly Burns:</strong> Community vote on additional burns
+                </div>
+            </div>
+
+            <div class="info">
+                <h4>🔥 Deflationary Pressure</h4>
+                <p>With 70% in liquidity providing massive stability, the burn rate is designed to exceed emission rate after 12 months, creating net deflationary pressure while maintaining deep liquidity.</p>
+            </div>
+        </section>
+
+        <section id="multipliers" class="section">
+            <h2>⚡ Multipliers & Bonus Systems</h2>
+            
+            <h3>Daily Login Streak Multiplier</h3>
+            <div class="equation">
+                <div class="equation-title">Streak Bonus Calculation</div>
+                <div class="math">
+                    StreakMultiplier = 1 + min(0.5, StreakDays × 0.02)
+                </div>
+                <div class="variables">
+                    <strong>Day 1-7:</strong> +2% per day (max 14%)<br>
+                    <strong>Day 8-25:</strong> +2% per day (max 50%)<br>
+                    <strong>Day 25+:</strong> Capped at 50% bonus
+                </div>
+            </div>
+
+            <h3>Pet Level Bonus System</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Pet Level</th>
+                        <th>XP Required</th>
+                        <th>Earning Bonus</th>
+                        <th>Special Abilities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1-10</td>
+                        <td>100 × Level²</td>
+                        <td>0% - 10%</td>
+                        <td>Basic care</td>
+                    </tr>
+                    <tr>
+                        <td>11-25</td>
+                        <td>200 × Level²</td>
+                        <td>11% - 25%</td>
+                        <td>Mini-games unlocked</td>
+                    </tr>
+                    <tr>
+                        <td>26-50</td>
+                        <td>300 × Level²</td>
+                        <td>26% - 50%</td>
+                        <td>Breeding available</td>
+                    </tr>
+                    <tr>
+                        <td>51-100</td>
+                        <td>500 × Level²</td>
+                        <td>51% - 100%</td>
+                        <td>Master tier rewards</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Achievement Multipliers</h3>
+            <div class="equation">
+                <div class="equation-title">Achievement Bonus Stack</div>
+                <div class="math">
+                    TotalBonus = ∏(1 + AchievementBonus_i) - 1
+                </div>
+                <div class="variables">
+                    <strong>Individual Bonuses:</strong> 5% - 25% per achievement<br>
+                    <strong>Maximum Stack:</strong> 200% total bonus<br>
+                    <strong>Rare Achievements:</strong> 50% - 100% bonus each
+                </div>
+            </div>
+
+            <h3>Social Activity Rewards</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>👥 Friend Referrals</h4>
+                    <p>5% of friend's earnings for 30 days</p>
+                    <p>Friend gets 10% bonus for 7 days</p>
+                </div>
+                <div class="card">
+                    <h4>🎉 Community Events</h4>
+                    <p>2x - 5x multipliers during events</p>
+                    <p>Limited time bonus periods</p>
+                </div>
+                <div class="card">
+                    <h4>🏆 Leaderboards</h4>
+                    <p>Top 1%: 50% bonus</p>
+                    <p>Top 10%: 25% bonus</p>
+                    <p>Top 25%: 10% bonus</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="staking" class="section">
+            <h2>🏦 Staking & Yield Farming</h2>
+            
+            <h3>Basic Staking Formula</h3>
+            <div class="equation">
+                <div class="equation-title">Compound Interest Calculation</div>
+                <div class="math">
+                    FinalAmount = P × (1 + r/n)^(n×t)
+                </div>
+                <div class="variables">
+                    <strong>P:</strong> Principal amount staked<br>
+                    <strong>r:</strong> Annual interest rate (12% - 36%)<br>
+                    <strong>n:</strong> Compounding frequency (daily = 365)<br>
+                    <strong>t:</strong> Time in years
+                </div>
+            </div>
+
+            <h3>Staking Tiers & Rewards</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tier</th>
+                        <th>Minimum Stake</th>
+                        <th>APY</th>
+                        <th>Lock Period</th>
+                        <th>Bonus Rewards</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Bronze</td>
+                        <td>1,000 $TAMA</td>
+                        <td>12%</td>
+                        <td>No lock</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td>Silver</td>
+                        <td>10,000 $TAMA</td>
+                        <td>18%</td>
+                        <td>30 days</td>
+                        <td>5% play bonus</td>
+                    </tr>
+                    <tr>
+                        <td>Gold</td>
+                        <td>50,000 $TAMA</td>
+                        <td>24%</td>
+                        <td>90 days</td>
+                        <td>10% play bonus</td>
+                    </tr>
+                    <tr>
+                        <td>Platinum</td>
+                        <td>100,000 $TAMA</td>
+                        <td>30%</td>
+                        <td>180 days</td>
+                        <td>15% play bonus</td>
+                    </tr>
+                    <tr>
+                        <td>Diamond</td>
+                        <td>500,000 $TAMA</td>
+                        <td>36%</td>
+                        <td>365 days</td>
+                        <td>25% play bonus</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Liquidity Pool Rewards</h3>
+            <div class="equation">
+                <div class="equation-title">LP Token Yield Calculation</div>
+                <div class="math">
+                    LP_Rewards = (UserLiquidity / TotalLiquidity) × DailyRewards × TimeStaked
+                </div>
+                <div class="variables">
+                    <strong>UserLiquidity:</strong> User's share of the liquidity pool<br>
+                    <strong>TotalLiquidity:</strong> Total pool liquidity<br>
+                    <strong>DailyRewards:</strong> 50,000 $TAMA distributed daily<br>
+                    <strong>TimeStaked:</strong> Days providing liquidity
+                </div>
+            </div>
+
+            <h3>Impermanent Loss Protection</h3>
+            <div class="equation">
+                <div class="equation-title">IL Compensation Formula</div>
+                <div class="math">
+                    Compensation = max(0, IL_Amount × ProtectionRate × StakeDuration)
+                </div>
+                <div class="variables">
+                    <strong>IL_Amount:</strong> Calculated impermanent loss<br>
+                    <strong>ProtectionRate:</strong> 50% - 100% based on stake duration<br>
+                    <strong>Full Protection:</strong> After 180 days of staking
+                </div>
+            </div>
+        </section>
+
+        <section id="governance" class="section">
+            <h2>🗳️ DAO Governance System</h2>
+            
+            <h3>Voting Power Calculation</h3>
+            <div class="equation">
+                <div class="equation-title">Governance Weight Formula</div>
+                <div class="math">
+                    VotingPower = √(StakedTokens) × TimeBonusMultiplier × ActivityScore
+                </div>
+                <div class="variables">
+                    <strong>StakedTokens:</strong> Amount of $TAMA staked for governance<br>
+                    <strong>TimeBonusMultiplier:</strong> 1.0x - 2.0x based on stake duration<br>
+                    <strong>ActivityScore:</strong> 0.5x - 1.5x based on game activity
+                </div>
+            </div>
+
+            <h3>Proposal Requirements</h3>
+            <div class="formula-box">
+                <div class="big-formula">
+                    MinimumStake = 100,000 $TAMA
+                </div>
+                <p>Required to submit governance proposals</p>
+            </div>
+
+            <h3>Voting Thresholds</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Proposal Type</th>
+                        <th>Quorum Required</th>
+                        <th>Approval Threshold</th>
+                        <th>Execution Delay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Parameter Changes</td>
+                        <td>15% of supply</td>
+                        <td>60% approval</td>
+                        <td>48 hours</td>
+                    </tr>
+                    <tr>
+                        <td>Treasury Allocation</td>
+                        <td>25% of supply</td>
+                        <td>65% approval</td>
+                        <td>7 days</td>
+                    </tr>
+                    <tr>
+                        <td>Smart Contract Upgrades</td>
+                        <td>35% of supply</td>
+                        <td>75% approval</td>
+                        <td>14 days</td>
+                    </tr>
+                    <tr>
+                        <td>Emergency Actions</td>
+                        <td>10% of supply</td>
+                        <td>80% approval</td>
+                        <td>Immediate</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Reward Distribution for Voters</h3>
+            <div class="equation">
+                <div class="equation-title">Voter Incentive Formula</div>
+                <div class="math">
+                    VoterReward = (ParticipationReward / TotalVoters) × ConsistencyBonus
+                </div>
+                <div class="variables">
+                    <strong>ParticipationReward:</strong> 10,000 $TAMA per proposal<br>
+                    <strong>ConsistencyBonus:</strong> 1.0x - 2.0x for regular voters<br>
+                    <strong>Minimum Stake:</strong> 1,000 $TAMA to receive rewards
+                </div>
+            </div>
+        </section>
+
+        <section id="api" class="section">
+            <h2>🔧 Smart Contract API Reference</h2>
+            
+            <h3>Core Contract Functions</h3>
+            <div class="code-block">
+                <pre>
+// Earning Functions
+function calculatePetCareReward(
+    uint256 baseRate,
+    uint256 happinessLevel,
+    uint256 activityMultiplier,
+    uint256 timeDecay
+) external pure returns (uint256 reward);
+
+function claimDailyReward(
+    address user,
+    uint256 streakDays
+) external returns (uint256 amount);
+
+// Staking Functions
+function stakeTokens(
+    uint256 amount,
+    uint8 tier
+) external returns (bool success);
+
+function calculateStakeRewards(
+    address staker
+) external view returns (uint256 rewards);
+
+// Governance Functions
+function submitProposal(
+    string memory title,
+    string memory description,
+    bytes memory callData
+) external returns (uint256 proposalId);
+
+function vote(
+    uint256 proposalId,
+    bool support
+) external returns (bool success);
+                </pre>
+            </div>
+
+            <h3>Event Signatures</h3>
+            <div class="code-block">
+                <pre>
+event PetCareReward(
+    address indexed user,
+    uint256 amount,
+    uint8 activityType,
+    uint256 timestamp
+);
+
+event StakeCreated(
+    address indexed staker,
+    uint256 amount,
+    uint8 tier,
+    uint256 unlockTime
+);
+
+event ProposalCreated(
+    uint256 indexed proposalId,
+    address indexed proposer,
+    string title
+);
+
+event VoteCast(
+    uint256 indexed proposalId,
+    address indexed voter,
+    bool support,
+    uint256 votingPower
+);
+                </pre>
+            </div>
+
+            <h3>Error Codes</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Error Code</th>
+                        <th>Description</th>
+                        <th>Resolution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ERR_001</td>
+                        <td>Insufficient balance</td>
+                        <td>Check token balance before transaction</td>
+                    </tr>
+                    <tr>
+                        <td>ERR_002</td>
+                        <td>Cooldown active</td>
+                        <td>Wait for cooldown period to expire</td>
+                    </tr>
+                    <tr>
+                        <td>ERR_003</td>
+                        <td>Invalid pet state</td>
+                        <td>Ensure pet is alive and healthy</td>
+                    </tr>
+                    <tr>
+                        <td>ERR_004</td>
+                        <td>Staking period not ended</td>
+                        <td>Wait for lock period to complete</td>
+                    </tr>
+                    <tr>
+                        <td>ERR_005</td>
+                        <td>Proposal already voted</td>
+                        <td>Cannot vote twice on same proposal</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Integration Examples</h3>
+            <div class="code-block">
+                <pre>
+// JavaScript Web3 Integration
+const contract = new web3.eth.Contract(ABI, CONTRACT_ADDRESS);
+
+// Claim rewards example
+async function claimRewards() {
+    try {
+        const tx = await contract.methods
+            .claimDailyReward(userAddress, streakDays)
+            .send({ from: userAddress });
+        
+        console.log('Rewards claimed:', tx.transactionHash);
+    } catch (error) {
+        console.error('Claim failed:', error.message);
+    }
+}
+
+// Check staking rewards
+async function getStakeRewards(userAddress) {
+    const rewards = await contract.methods
+        .calculateStakeRewards(userAddress)
+        .call();
+    
+    return web3.utils.fromWei(rewards, 'ether');
+}
+                </pre>
+            </div>
+        </section>
+
+        <section id="security" class="section">
+            <h2>🛡️ Security & Audit Information</h2>
+            
+            <h3>Smart Contract Security</h3>
+            <div class="info">
+                <h4>🔍 Audit Status</h4>
+                <p>Smart contracts have been audited by CertiK and Quantstamp. All critical and high-severity issues have been resolved.</p>
+            </div>
+
+            <h3>Security Measures</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>🔐 Multi-Signature Wallet</h4>
+                    <p>Treasury funds secured with 4-of-7 multi-sig</p>
+                    <p>No single point of failure for fund management</p>
+                </div>
+                <div class="card">
+                    <h4>⏰ Time Locks</h4>
+                    <p>All parameter changes have mandatory delays</p>
+                    <p>Community has time to review and react</p>
+                </div>
+                <div class="card">
+                    <h4>🤖 Anti-Bot Protection</h4>
+                    <p>Advanced pattern recognition algorithms</p>
+                    <p>Rate limiting and behavioral analysis</p>
+                </div>
+                <div class="card">
+                    <h4>🔄 Upgradability</h4>
+                    <p>Proxy pattern for critical bug fixes</p>
+                    <p>Community governance required for upgrades</p>
+                </div>
+            </div>
+
+            <h3>Risk Mitigation</h3>
+            <div class="equation">
+                <div class="equation-title">Maximum Daily Risk Exposure</div>
+                <div class="math">
+                    MaxRisk = min(DailyEmission × 0.1, TreasuryBalance × 0.05)
+                </div>
+                <div class="variables">
+                    <strong>Daily Emission Limit:</strong> 10% of scheduled emission<br>
+                    <strong>Treasury Limit:</strong> 5% of total treasury<br>
+                    <strong>Emergency Pause:</strong> Available for critical issues
+                </div>
+            </div>
+
+            <h3>Bug Bounty Program</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Severity</th>
+                        <th>Reward Range</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Critical</td>
+                        <td>$50,000 - $100,000</td>
+                        <td>Fund drainage, complete system compromise</td>
+                    </tr>
+                    <tr>
+                        <td>High</td>
+                        <td>$10,000 - $50,000</td>
+                        <td>Significant fund loss, governance bypass</td>
+                    </tr>
+                    <tr>
+                        <td>Medium</td>
+                        <td>$1,000 - $10,000</td>
+                        <td>Logic errors, reward manipulation</td>
+                    </tr>
+                    <tr>
+                        <td>Low</td>
+                        <td>$100 - $1,000</td>
+                        <td>Minor issues, optimization opportunities</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning">
+                <h4>⚠️ Responsible Disclosure</h4>
+                <p>Please report security vulnerabilities through our private disclosure program. Public disclosure before fixes are implemented may disqualify you from bounty rewards.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📚 Additional Resources</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <h4>🔗 Useful Links</h4>
+                    <ul>
+                        <li><a href="https://github.com/tamaweb" style="color: var(--accent);">GitHub Repository</a></li>
+                        <li><a href="https://discord.gg/tamaweb" style="color: var(--accent);">Discord Community</a></li>
+                        <li><a href="https://docs.solana.com/" style="color: var(--accent);">Solana Documentation</a></li>
+                        <li><a href="https://jup.ag/" style="color: var(--accent);">Jupiter DEX</a></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>📧 Contact Information</h4>
+                    <p><strong>Technical Support:</strong> tech@tamaweb.io</p>
+                    <p><strong>Security Issues:</strong> security@tamaweb.io</p>
+                    <p><strong>Partnerships:</strong> partners@tamaweb.io</p>
+                    <p><strong>General Inquiries:</strong> hello@tamaweb.io</p>
+                </div>
+                <div class="card">
+                    <h4>📊 Analytics & Tracking</h4>
+                    <ul>
+                        <li>DexScreener: Real-time price data</li>
+                        <li>CoinGecko: Market statistics</li>
+                        <li>Solscan: Transaction explorer</li>
+                        <li>DefiLlama: TVL tracking</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>🏛️ Governance Platform</h4>
+                    <p>Participate in DAO governance through our decentralized voting platform. Stake $TAMA tokens to gain voting power and help shape the future of TAMAWEB.</p>
+                </div>
+            </div>
+
+            <div class="info">
+                <h4>📋 Changelog</h4>
+                <p><strong>v1.2.0 (May 24, 2025):</strong> Enhanced earning formulas, new staking tiers, governance improvements</p>
+                <p><strong>v1.1.5 (May 10, 2025):</strong> Bug fixes, optimized gas usage, anti-bot enhancements</p>
+                <p><strong>v1.1.0 (April 28, 2025):</strong> Staking system launch, liquidity mining program</p>
+                <p><strong>v1.0.0 (April 15, 2025):</strong> Initial mainnet deployment, basic earning system</p>
+            </div>
+        </section>
+    </div>
+
+    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+        ↑ Back to Top
+    </button>
+
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Show/hide back to top button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        // Add copy functionality to code blocks
+        document.querySelectorAll('.code-block').forEach(block => {
+            const button = document.createElement('button');
+            button.textContent = 'Copy';
+            button.style.cssText = 'position: absolute; top: 8px; right: 8px; background: var(--primary); color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 12px;';
+            
+            block.style.position = 'relative';
+            block.appendChild(button);
+            
+            button.addEventListener('click', () => {
+                const code = block.querySelector('pre').textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    button.textContent = 'Copied!';
+                    setTimeout(() => button.textContent = 'Copy', 2000);
+                });
+            });
+        });
+
+        console.log('📚 TAMAWEB Documentation loaded');
+        console.log('🔧 Interactive features enabled');
+    </script>
+</body>
+</html>
