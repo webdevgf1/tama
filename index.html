@@ -652,11 +652,11 @@
         }
 
         .log-entry.earning {
-            background: rgba(255, 165, 2, 0.15);
-            border-color: rgba(255, 165, 2, 0.3);
-            color: var(--accent);
-            border-left: 3px solid var(--accent);
-        }
+    background: rgba(0, 255, 0, 0.15);
+    border-color: rgba(0, 255, 0, 0.3);
+    color: #00ff00;
+    border-left: 3px solid #00ff00;
+}
 
         .log-entry.new {
             animation: slideIn 0.3s ease-out;
@@ -962,9 +962,12 @@
                 <div style="font-size: 12px; color: var(--accent);">LIVE</div>
             </div>
             <div class="earnings-display">
-                <div class="earnings-amount" id="totalTama">0.000</div>
-                <div class="earnings-label">Total $TAMA Earned</div>
-            </div>
+    <div class="earnings-amount">
+        <span id="totalTama">0.000</span>
+        <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/68320285636a598933050b9c_e02ce86bcfd6d1d6c2f775afb3ec8c01_w200.gif" alt="$TAMA Coin" style="width: 32px; height: 32px; margin-left: 10px; vertical-align: middle;">
+    </div>
+    <div class="earnings-label">Total $TAMA Earned</div>
+</div>
             <div class="withdraw-section">
                 <button class="withdraw-btn" id="withdrawBtn" disabled>
                     WITHDRAW $TAMA (MIN: 1.000)
