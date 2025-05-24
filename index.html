@@ -80,10 +80,10 @@
         }
 
         .game-frame {
-            width: 200%;
-            height: 200%;
+            width: 50%;
+            height: 50%;
             border: none;
-            transform: scale(0.5);
+            transform: scale(1.0);
             transform-origin: 0 0;
             position: relative;
         }
@@ -122,35 +122,7 @@
             font-size: 14px;
         }
 
-        .controls {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 1001;
-        }
 
-        .control-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ff6b9d, #c44569);
-            border: none;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 107, 157, 0.4);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .control-btn:hover {
-            transform: scale(1.1);
-        }
 
         .loading-overlay {
             position: absolute;
@@ -358,8 +330,6 @@
     </div>
 
     <div class="controls">
-        <button class="control-btn" id="cropToggle" title="Toggle Crop Mode">✂</button>
-        <button class="control-btn" id="fullscreenBtn" title="Toggle Fullscreen">⛶</button>
     </div>
 
     <script>
@@ -372,9 +342,8 @@
         const zoomOut = document.getElementById('zoomOut');
         const resetZoom = document.getElementById('resetZoom');
 
-        let currentScale = 0.5;
+        let currentScale = 1.0;
         let isCropped = false;
-        let isFullscreen = false;
 
         // Hide loading overlay once iframe loads
         gameFrame.addEventListener('load', function() {
@@ -383,51 +352,10 @@
             }, 3000);
         });
 
-        // Fullscreen functionality
-        fullscreenBtn.addEventListener('click', function() {
-            if (!isFullscreen) {
-                gameContainer.classList.add('fullscreen-mode');
-                document.body.style.overflow = 'hidden';
-                fullscreenBtn.innerHTML = '✕';
-                isFullscreen = true;
-                
-                // Hide other UI elements
-                document.querySelector('.header').style.display = 'none';
-                document.querySelector('.instructions').style.display = 'none';
-                document.querySelector('.side-panel').style.display = 'none';
-            } else {
-                gameContainer.classList.remove('fullscreen-mode');
-                document.body.style.overflow = '';
-                fullscreenBtn.innerHTML = '⛶';
-                isFullscreen = false;
-                
-                // Show other UI elements
-                document.querySelector('.header').style.display = 'flex';
-                if (window.innerWidth > 768) {
-                    document.querySelector('.instructions').style.display = 'block';
-                    document.querySelector('.side-panel').style.display = 'block';
-                }
-            }
-        });
-
-        // Crop toggle functionality
-        cropToggle.addEventListener('click', function() {
-            isCropped = !isCropped;
-            if (isCropped) {
-                gameFrame.classList.add('cropped');
-                cropToggle.innerHTML = '🔍';
-                cropToggle.title = 'Normal View';
-            } else {
-                gameFrame.classList.remove('cropped');
-                cropToggle.innerHTML = '✂';
-                cropToggle.title = 'Crop Mode';
-            }
-        });
-
         // Zoom controls
         zoomIn.addEventListener('click', function() {
             if (!isCropped) {
-                currentScale = Math.min(currentScale + 0.1, 1.0);
+                currentScale = Math.min(currentScale + 0.1, 2.0);
                 updateZoom();
             }
         });
@@ -440,30 +368,20 @@
         });
 
         resetZoom.addEventListener('click', function() {
-            if (isCropped) {
-                gameFrame.style.transform = 'scale(0.33) translate(-50%, -30%)';
-            } else {
-                currentScale = 0.5;
-                updateZoom();
-            }
+            currentScale = 1.0;
+            updateZoom();
         });
 
         function updateZoom() {
-            if (!isCropped) {
-                const size = 100 / currentScale;
-                gameFrame.style.width = size + '%';
-                gameFrame.style.height = size + '%';
-                gameFrame.style.transform = `scale(${currentScale})`;
-            }
+            const size = 100 / currentScale;
+            gameFrame.style.width = size + '%';
+            gameFrame.style.height = size + '%';
+            gameFrame.style.transform = `scale(${currentScale})`;
         }
 
         // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'f' || e.key === 'F') {
-                fullscreenBtn.click();
-            } else if (e.key === 'c' || e.key === 'C') {
-                cropToggle.click();
-            } else if (e.key === '+' || e.key === '=') {
+            if (e.key === '+' || e.key === '=') {
                 zoomIn.click();
             } else if (e.key === '-') {
                 zoomOut.click();
@@ -517,8 +435,6 @@
 
         console.log('🎮 Tamaweb Embedded Player Ready!');
         console.log('⌨️ Keyboard shortcuts:');
-        console.log('  F - Toggle fullscreen');
-        console.log('  C - Toggle crop mode');
         console.log('  +/- - Zoom in/out');
         console.log('  R - Reset view');
     </script>
