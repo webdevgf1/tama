@@ -80,8 +80,8 @@
         }
 
         .game-frame {
-            width: 50%;
-            height: 50%;
+            width: 100%;
+            height: 100%;
             border: none;
             transform: scale(1.0);
             transform-origin: 0 0;
@@ -345,11 +345,20 @@
         let currentScale = 1.0;
         let isCropped = false;
 
-        // Hide loading overlay once iframe loads
+        // Initialize the game at the correct zoom level on load
         gameFrame.addEventListener('load', function() {
+            // Set initial zoom to the good viewing level
+            currentScale = 1.0;
+            updateZoom();
+            
             setTimeout(() => {
                 loadingOverlay.style.display = 'none';
             }, 3000);
+        });
+
+        // Initialize zoom even before load
+        window.addEventListener('DOMContentLoaded', function() {
+            updateZoom();
         });
 
         // Zoom controls
