@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+/* Custom scrollbar */<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -70,6 +70,31 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .ca-section {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .ca-section:hover {
+            color: var(--accent);
+        }
+
+        .ca-soon {
+            color: var(--primary);
+            margin-left: 4px;
+        }
+
+        .ca-section:hover .ca-soon {
+            color: var(--accent);
         }
 
         .logo {
@@ -462,7 +487,47 @@
             }
         }
 
-        /* Custom scrollbar */
+        /* Page loading animation */
+        .page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .page-loader.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-gif {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+        }
+
+        .typing-text {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            border-right: 2px solid var(--primary);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: var(--primary); }
+            51%, 100% { border-color: transparent; }
+        }
         .earnings-log::-webkit-scrollbar {
             width: 6px;
         }
@@ -482,9 +547,18 @@
     </style>
 </head>
 <body>
+    <!-- Page Loading Animation -->
+    <div class="page-loader" id="pageLoader">
+        <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6831e46e9248e5015eb3e8e2_Animated_weeptchi.webp" alt="Loading..." class="loader-gif">
+        <div class="typing-text" id="typingText"></div>
+    </div>
+
     <header class="header">
         <div class="logo">
             <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6831e389ef773b4eeff086cd_Tamaweb-24-05-2025.png" alt="Tamaweb Logo">
+        </div>
+        <div class="ca-section" id="caSection">
+            CA:<span class="ca-soon">SOON</span>
         </div>
         <nav class="nav-buttons">
             <button id="connectWallet" class="btn primary">CONNECT WALLET</button>
@@ -590,6 +664,62 @@
     </div>
 
     <script>
+        // Page loading animation
+        const pageLoader = document.getElementById('pageLoader');
+        const typingText = document.getElementById('typingText');
+        const text = 'TAMAWEB';
+        let index = 0;
+
+        function typeText() {
+            if (index < text.length) {
+                typingText.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeText, 150);
+            } else {
+                // Wait 1 second then fade out
+                setTimeout(() => {
+                    pageLoader.classList.add('fade-out');
+                    setTimeout(() => {
+                        pageLoader.style.display = 'none';
+                    }, 500);
+                }, 1000);
+            }
+        }
+
+        // Start typing after a brief delay
+        setTimeout(typeText, 500);
+
+        // CA:SOON clipboard functionality
+        document.getElementById('caSection').addEventListener('click', function() {
+            navigator.clipboard.writeText('SOON').then(() => {
+                const originalText = this.innerHTML;
+                this.innerHTML = 'CA:<span class="ca-soon">COPIED!</span>';
+                this.style.color = 'var(--success)';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.style.color = '';
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = 'SOON';
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const originalText = this.innerHTML;
+                this.innerHTML = 'CA:<span class="ca-soon">COPIED!</span>';
+                this.style.color = 'var(--success)';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    this.style.color = '';
+                }, 2000);
+            });
+        });
+
         // Game loading
         const gameFrame = document.getElementById('gameFrame');
         const loadingOverlay = document.getElementById('loadingOverlay');
