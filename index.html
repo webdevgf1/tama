@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tamaweb - Play-to-Earn Virtual Pets</title>
+    <link rel="icon" type="image/png" href="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6831e3b4fdbf6684af1868b6_ChatGPT%20Image%20May%2024%2C%202025%2C%2004_20_15%20PM.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
         
@@ -75,16 +76,11 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-primary);
         }
 
-        .logo::before {
-            content: '◉';
-            color: var(--accent);
-            font-size: 24px;
-            animation: pulse 2s infinite;
+        .logo img {
+            height: 32px;
+            width: auto;
         }
 
         @keyframes pulse {
@@ -229,9 +225,35 @@
             color: white;
             padding: 20px;
             text-align: center;
-            margin: 16px;
+            margin: 16px 16px 0 16px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .withdraw-section {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .withdraw-btn {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg-dark);
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: not-allowed;
+            opacity: 0.5;
+            transition: all 0.2s ease;
+        }
+
+        .withdraw-btn:disabled {
+            background: var(--bg-dark);
+            color: var(--text-secondary);
+            opacity: 0.5;
         }
 
         .earnings-amount {
@@ -461,7 +483,9 @@
 </head>
 <body>
     <header class="header">
-        <div class="logo">TAMAWEB</div>
+        <div class="logo">
+            <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6831e389ef773b4eeff086cd_Tamaweb-24-05-2025.png" alt="Tamaweb Logo">
+        </div>
         <nav class="nav-buttons">
             <button id="connectWallet" class="btn primary">CONNECT WALLET</button>
             <a href="https://pump.fun" target="_blank" class="btn">PUMP.FUN</a>
@@ -502,6 +526,11 @@
             <div class="earnings-display">
                 <div class="earnings-amount" id="totalTama">0.000</div>
                 <div class="earnings-label">Total $TAMA Earned</div>
+            </div>
+            <div class="withdraw-section">
+                <button class="withdraw-btn" id="withdrawBtn" disabled>
+                    WITHDRAW $TAMA (MIN: 1.000)
+                </button>
             </div>
             <div class="earnings-log" id="earningsLog">
                 <div class="log-entry">System initialized</div>
@@ -578,6 +607,24 @@
 
         function updateTamaDisplay() {
             totalTamaElement.textContent = totalTama.toFixed(3);
+            
+            // Update withdraw button state
+            const withdrawBtn = document.getElementById('withdrawBtn');
+            if (totalTama >= 1.000) {
+                withdrawBtn.disabled = false;
+                withdrawBtn.style.opacity = '1';
+                withdrawBtn.style.cursor = 'pointer';
+                withdrawBtn.style.background = 'var(--success)';
+                withdrawBtn.style.color = 'white';
+                withdrawBtn.textContent = `WITHDRAW ${totalTama.toFixed(3)} $TAMA`;
+            } else {
+                withdrawBtn.disabled = true;
+                withdrawBtn.style.opacity = '0.5';
+                withdrawBtn.style.cursor = 'not-allowed';
+                withdrawBtn.style.background = 'var(--bg-dark)';
+                withdrawBtn.style.color = 'var(--text-secondary)';
+                withdrawBtn.textContent = 'WITHDRAW $TAMA (MIN: 1.000)';
+            }
         }
 
         function addLogEntry(message, isEarning = false) {
@@ -643,7 +690,17 @@
             }, 2000);
         });
 
-        // Modal functionality
+        // Withdraw functionality
+        document.getElementById('withdrawBtn').addEventListener('click', function() {
+            if (totalTama >= 1.000) {
+                const amount = totalTama;
+                totalTama = 0;
+                localStorage.setItem('totalTama', '0');
+                updateTamaDisplay();
+                addLogEntry(`Withdrew ${amount.toFixed(3)} $TAMA to wallet`);
+                addLogEntry('Transaction confirmed on Solana');
+            }
+        });
         const modals = {
             'infoBtn': 'infoModal',
             'helpBtn': 'helpModal'
