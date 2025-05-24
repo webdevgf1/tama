@@ -85,10 +85,6 @@
             user-select: none;
         }
 
-        .ca-section:hover {
-            color: var(--accent);
-        }
-
         .content-sections {
                 margin-top: 16px;
                 gap: 20px;
@@ -114,7 +110,11 @@
 
             .feature-grid {
                 grid-template-columns: 1fr;
-            } 
+            }
+
+        .ca-section:hover {
+            color: var(--accent);
+        }
 
         .ca-soon {
             color: var(--accent);
@@ -195,17 +195,51 @@
             display: grid;
             grid-template-columns: 1fr 400px;
             gap: 24px;
-            padding: 88px 32px 32px;
+            padding: 88px 32px 0px;
             max-width: 1400px;
             margin: 0 auto;
-            min-height: calc(100vh - 56px);
+            min-height: 100vh;
+            position: relative;
+            z-index: 2;
+        }
+
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(47, 27, 20, 0.3), rgba(61, 40, 23, 0.4));
+            z-index: 1;
+            pointer-events: none;
         }
 
         .content-sections {
-            margin-top: 32px;
+            margin-top: 100vh;
             display: flex;
             flex-direction: column;
             gap: 32px;
+            background: var(--bg-dark);
+            position: relative;
+            z-index: 2;
+            padding-top: 60px;
         }
 
         .section {
@@ -759,6 +793,7 @@
                 grid-template-columns: 1fr;
                 grid-template-rows: auto auto;
                 gap: 16px;
+                padding: 88px 16px 0px;
             }
 
             .earnings-panel {
@@ -771,6 +806,10 @@
 
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .video-background video {
+                object-position: center;
             }
         }
 
@@ -871,6 +910,14 @@
         <div class="typing-text" id="typingText"></div>
     </div>
 
+    <!-- Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline>
+            <source src="https://res.cloudinary.com/drizfkvpy/video/upload/v1748103091/tamaweb_ager6w.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="video-overlay"></div>
+
     <header class="header">
         <div class="logo">
             <img src="https://cdn.prod.website-files.com/6740d85c4e3daeef29a89470/6831e389ef773b4eeff086cd_Tamaweb-24-05-2025.png" alt="Tamaweb Logo">
@@ -880,10 +927,9 @@
         </div>
         <nav class="nav-buttons">
             <button id="connectWallet" class="btn primary">CONNECT WALLET</button>
-            <a href="https://github.com/sovagpt/tamaweb" target="_blank" class="btn">GITHUB</a>
             <a href="https://pump.fun" target="_blank" class="btn">PUMP.FUN</a>
-            <a href="docs.html" class="btn">DOCS</a>
-            <a href="https://twitter.com/TamaWebFun" target="_blank" class="btn">TWITTER</a>
+            <a href="#" target="_blank" class="btn">DOCS</a>
+            <a href="https://twitter.com" target="_blank" class="btn">TWITTER</a>
         </nav>
     </header>
 
@@ -891,7 +937,7 @@
         <section class="game-section">
             <div class="game-container">
                 <div class="game-header">
-                    <div class="game-title">Tamaweb Client</div>
+                    <div class="game-title">Virtual Pet Game</div>
                     <div class="game-status">
                         <span class="status-dot"></span>
                         LIVE
@@ -914,7 +960,7 @@
         <section class="earnings-panel">
             <div class="panel-header">
                 <div class="panel-title">$TAMA Earnings</div>
-                <div style="font-size: 12px; color: var(--accent);">LIVE</div>
+                <div style="font-size: 12px; color: var(--accent);">SOLANA</div>
             </div>
             <div class="earnings-display">
                 <div class="earnings-amount" id="totalTama">0.000</div>
@@ -1116,19 +1162,19 @@
                     <div style="font-size: 12px; color: var(--text-secondary);">Total Supply</div>
                 </div>
                 <div style="background: rgba(255, 71, 87, 0.15); border: 2px solid var(--primary); border-radius: 12px; padding: 16px; text-align: center;">
-                    <div style="font-size: 20px; font-weight: 700; color: var(--primary);">20%</div>
+                    <div style="font-size: 20px; font-weight: 700; color: var(--primary);">40%</div>
                     <div style="font-size: 12px; color: var(--text-secondary);">Play-to-Earn Rewards</div>
                 </div>
                 <div style="background: rgba(255, 71, 87, 0.15); border: 2px solid var(--primary); border-radius: 12px; padding: 16px; text-align: center;">
-                    <div style="font-size: 20px; font-weight: 700; color: var(--primary);">70%</div>
+                    <div style="font-size: 20px; font-weight: 700; color: var(--primary);">30%</div>
                     <div style="font-size: 12px; color: var(--text-secondary);">Liquidity Pool</div>
                 </div>
                 <div style="background: rgba(255, 71, 87, 0.15); border: 2px solid var(--primary); border-radius: 12px; padding: 16px; text-align: center;">
-                    <div style="font-size: 20px; font-weight: 700; color: var(--primary);">5%</div>
+                    <div style="font-size: 20px; font-weight: 700; color: var(--primary);">20%</div>
                     <div style="font-size: 12px; color: var(--text-secondary);">Development Fund</div>
                 </div>
                 <div style="background: rgba(255, 71, 87, 0.15); border: 2px solid var(--primary); border-radius: 12px; padding: 16px; text-align: center;">
-                    <div style="font-size: 20px; font-weight: 700; color: var(--primary);">5%</div>
+                    <div style="font-size: 20px; font-weight: 700; color: var(--primary);">10%</div>
                     <div style="font-size: 12px; color: var(--text-secondary);">Marketing & Partnerships</div>
                 </div>
             </div>
@@ -1138,7 +1184,7 @@
                     • 2% of all game transactions burned forever<br>
                     • Pet evolution costs reduce supply<br>
                     • Monthly community burn events<br>
-                    • $TAMA tokens burns
+                    • NFT minting burns $TAMA tokens
                 </div>
             </div>
         </section>
@@ -1161,7 +1207,7 @@
             <ul style="padding-left: 20px;">
                 <li>Earn $TAMA tokens through pet care activities</li>
                 <li>Built on Solana for fast, low-cost transactions</li>
-                <li>True ownership of virtual pets</li>
+                <li>True ownership of virtual pets as NFTs</li>
                 <li>Trade tokens on decentralized exchanges</li>
                 <li>Stake tokens for additional rewards</li>
             </ul>
