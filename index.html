@@ -1,16 +1,4 @@
-// Initialize the game at the correct zoom level on load
-        gameFrame.addEventListener('load', function() {
-            setTimeout(() => {
-                loadingOverlay.style.display = 'none';
-            }, 3000);
-        });    <div class="floating-buttons">
-        <button class="floating-btn" id="howToPlayBtn" title="How to Play">
-            ?
-        </button>
-        <button class="floating-btn" id="featuresBtn" title="Game Features">
-            ★
-        </button>
-    </div>        .floating-buttons {<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -124,8 +112,8 @@
             left: 20px;
             width: calc(60vw - 40px);
             max-width: 500px;
-            height: calc(100vh - 120px);
-            max-height: 700px;
+            height: calc(100vh - 140px);
+            max-height: 600px;
             border: 5px solid #FF69B4;
             border-radius: 25px;
             box-shadow: 0 15px 40px rgba(255, 105, 180, 0.4);
@@ -205,8 +193,8 @@
             width: calc(40vw - 60px);
             max-width: 400px;
             min-width: 300px;
-            height: calc(100vh - 120px);
-            max-height: 700px;
+            height: calc(100vh - 140px);
+            max-height: 600px;
             background: linear-gradient(135deg, #FFE5F1, #F0F8FF);
             border: 5px solid #FF69B4;
             border-radius: 25px;
@@ -676,6 +664,13 @@
         const gameFrame = document.getElementById('gameFrame');
         const loadingOverlay = document.getElementById('loadingOverlay');
 
+        // Initialize the game at the correct zoom level on load
+        gameFrame.addEventListener('load', function() {
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+            }, 3000);
+        });
+
         // Initialize $TAMA earnings system
         let totalTama = parseFloat(localStorage.getItem('totalTama')) || 0;
         let isEarning = true;
@@ -731,11 +726,11 @@
             setTimeout(earnTama, nextEarning);
         }
         
-        // Start earning after page load
+        // Start earning after 10 seconds of user being on site
         setTimeout(() => {
             addTerminalLine('🚀 Pet care mining started!', 'status');
             earnTama();
-        }, 3000);
+        }, 10000);
         
         // Initial display update
         updateTamaDisplay();
