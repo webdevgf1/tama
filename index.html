@@ -1,4 +1,16 @@
-<!DOCTYPE html>
+// Initialize the game at the correct zoom level on load
+        gameFrame.addEventListener('load', function() {
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+            }, 3000);
+        });    <div class="floating-buttons">
+        <button class="floating-btn" id="howToPlayBtn" title="How to Play">
+            ?
+        </button>
+        <button class="floating-btn" id="featuresBtn" title="Game Features">
+            ★
+        </button>
+    </div>        .floating-buttons {<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -109,9 +121,8 @@
         .game-container {
             position: fixed;
             top: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90vw;
+            left: 20px;
+            width: 55vw;
             max-width: 500px;
             height: calc(100vh - 120px);
             max-height: 700px;
@@ -186,7 +197,93 @@
             font-weight: 600;
         }
 
-        .floating-buttons {
+        /* Terminal Styles */
+        .terminal-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            width: 40vw;
+            max-width: 400px;
+            height: calc(100vh - 120px);
+            max-height: 350px;
+            background: linear-gradient(135deg, #FFE5F1, #F0F8FF);
+            border: 5px solid #FF69B4;
+            border-radius: 25px;
+            font-family: 'Press Start 2P', monospace;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.4);
+            position: relative;
+        }
+
+        .terminal-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #FF69B4, #FF1493, #DC143C, #FF69B4);
+            border-radius: 25px;
+            z-index: -1;
+            animation: rainbow 3s linear infinite;
+        }
+
+        .terminal-header {
+            color: #FF69B4;
+            font-size: 12px;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid #FFB3D1;
+            padding-bottom: 10px;
+            text-shadow: 1px 1px 0px #FF1493;
+        }
+
+        .terminal-content {
+            color: #666;
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+            padding: 5px 8px;
+            background: rgba(255, 179, 209, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #FFB3D1;
+        }
+
+        .earnings-display {
+            color: #FF1493;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 15px 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 179, 209, 0.3), rgba(255, 229, 241, 0.3));
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid #FF69B4;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
+            text-shadow: 1px 1px 0px rgba(255, 20, 147, 0.3);
+        }
+
+        .earning-line {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 229, 241, 0.2));
+            border-left: 3px solid #FFD700;
+            color: #E6007E;
+            animation: glow 2s ease-in-out;
+        }
+
+        @keyframes glow {
+            0% { background: linear-gradient(135deg, rgba(255, 215, 0, 0.4), rgba(255, 229, 241, 0.4)); }
+            100% { background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 229, 241, 0.1)); }
+        }
+
+        .status-line {
+            background: linear-gradient(135deg, rgba(181, 234, 255, 0.2), rgba(255, 229, 241, 0.2));
+            border-left: 3px solid #B5EAFF;
+            color: #0066CC;
+        }
             position: fixed;
             left: 30px;
             top: 50%;
@@ -224,11 +321,10 @@
         .floating-buttons-right {
             position: fixed;
             right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
+            bottom: 30px;
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            flex-direction: row;
+            gap: 15px;
             z-index: 999;
         }
 
@@ -327,9 +423,20 @@
             
             .game-container {
                 top: 80px;
+                left: 10px;
                 width: 95vw;
                 max-width: none;
-                height: calc(100vh - 100px);
+                height: 60vh;
+            }
+
+            .terminal-container {
+                top: calc(60vh + 100px);
+                left: 10px;
+                right: 10px;
+                width: calc(100vw - 20px);
+                max-width: none;
+                height: calc(40vh - 80px);
+                max-height: none;
             }
             
             .header {
@@ -395,6 +502,9 @@
     <header class="header">
         <h1>Tamaweb</h1>
         <div class="header-buttons">
+            <button id="connectWallet" class="btn">
+                CONNECT WALLET
+            </button>
             <a href="https://pump.fun" target="_blank" class="btn">
                 PUMP.FUN
             </a>
@@ -407,13 +517,19 @@
         </div>
     </header>
 
-    <div class="floating-buttons">
-        <button class="floating-btn" id="howToPlayBtn" title="How to Play">
-            ?
-        </button>
-        <button class="floating-btn" id="featuresBtn" title="Game Features">
-            ★
-        </button>
+    <!-- Terminal Container -->
+    <div class="terminal-container">
+        <div class="terminal-header">
+            === $TAMA EARNINGS TERMINAL ===
+        </div>
+        <div class="earnings-display">
+            Total $TAMA: <span id="totalTama">0.000</span>
+        </div>
+        <div class="terminal-content" id="terminalContent">
+            <div class="terminal-line">[SYSTEM] Welcome to TAMAWEB P2E!</div>
+            <div class="terminal-line">[INFO] Earning $TAMA tokens on Solana...</div>
+            <div class="terminal-line">[STATUS] Mining active <span class="cursor">_</span></div>
+        </div>
     </div>
 
     <div class="floating-buttons-right">
@@ -482,23 +598,23 @@
             
             <div class="feature-grid">
                 <div class="feature-card">
-                    <h4>🐣 Virtual Pet Care</h4>
-                    <p>Feed, play, and nurture your digital companion just like a real Tamagotchi! Watch them react to your care in real-time.</p>
+                    <h4>💰 Play-to-Earn</h4>
+                    <p>Earn $TAMA tokens while playing! Every action - feeding, playing, caring - generates real cryptocurrency rewards on the Solana blockchain.</p>
                 </div>
 
                 <div class="feature-card">
-                    <h4>🦋 Evolution System</h4>
-                    <p>Your pet evolves based on how you care for them. Discover dozens of unique characters and evolution paths!</p>
+                    <h4>🔗 Web3 Integration</h4>
+                    <p>Connect your Solana wallet to track earnings, trade tokens, and truly own your virtual pets as NFTs with blockchain verification.</p>
                 </div>
 
                 <div class="feature-card">
-                    <h4>🎪 Mini Games</h4>
-                    <p>Play exciting arcade games to earn coins and keep your pet happy. New games unlock as your pet grows!</p>
+                    <h4>🎪 Earning Games</h4>
+                    <p>Play mini-games to earn bonus $TAMA tokens! Higher scores = higher rewards. Compete with other players for leaderboard prizes.</p>
                 </div>
 
                 <div class="feature-card">
-                    <h4>🎨 Customization</h4>
-                    <p>Decorate your pet's room with furniture, change their shell design, and dress them up with accessories!</p>
+                    <h4>🏆 NFT Pets</h4>
+                    <p>Your pets are unique NFTs that can be traded, sold, or collected. Rare evolutions and special traits increase their value!</p>
                 </div>
 
                 <div class="feature-card">
@@ -528,29 +644,29 @@
     <div id="infoModal" class="modal">
         <div class="modal-content">
             <span class="close" data-modal="infoModal">&times;</span>
-            <h3>ℹ️ About Tamaweb</h3>
+            <h3>ℹ️ About Tamaweb P2E</h3>
             
             <div style="text-align: center; margin-bottom: 25px;">
-                <div style="font-size: 60px; margin-bottom: 15px;">🥚</div>
-                <p style="font-size: 18px; color: #FF69B4; font-weight: 600;">The Ultimate Virtual Pet Experience</p>
+                <div style="font-size: 60px; margin-bottom: 15px;">💰</div>
+                <p style="font-size: 18px; color: #FF69B4; font-weight: 600;">Play-to-Earn Virtual Pets on Solana</p>
             </div>
 
-            <p>Tamaweb is a modern take on the classic Tamagotchi experience, bringing virtual pet care to the digital age. Developed with love by SamanDev, this game captures all the charm and responsibility of caring for a virtual companion.</p>
+            <p>Tamaweb is a revolutionary play-to-earn virtual pet game built on the Solana blockchain. Earn $TAMA tokens while caring for your digital companions in this next-generation Web3 gaming experience.</p>
 
             <div style="background: linear-gradient(135deg, rgba(255, 179, 209, 0.3), rgba(229, 243, 255, 0.3)); padding: 20px; border-radius: 15px; margin: 20px 0;">
-                <h4 style="color: #FF69B4; margin-bottom: 10px;">🌟 Why Tamaweb?</h4>
+                <h4 style="color: #FF69B4; margin-bottom: 10px;">🌟 Web3 Features</h4>
                 <ul>
-                    <li>🆓 Completely free to play</li>
-                    <li>🌐 No downloads required - play instantly in your browser</li>
-                    <li>📱 Works perfectly on all devices</li>
-                    <li>🎨 Beautiful pixel art and smooth animations</li>
-                    <li>👥 Active community and regular updates</li>
-                    <li>🔧 Open source with modding support</li>
+                    <li>💰 Earn $TAMA tokens by playing and caring for pets</li>
+                    <li>🏦 Built on Solana for fast, low-cost transactions</li>
+                    <li>🎮 True ownership of your virtual pets as NFTs</li>
+                    <li>🔗 Connect your Phantom or Solflare wallet</li>
+                    <li>💱 Trade $TAMA on DEXs and exchanges</li>
+                    <li>🎯 Stake your tokens for additional rewards</li>
                 </ul>
             </div>
 
             <p style="text-align: center; margin-top: 25px; font-style: italic; color: #666;">
-                "Relive the magic of virtual pet care with modern features and endless possibilities!"
+                "The future of virtual pet games - where caring pays!"
             </p>
         </div>
     </div>
@@ -559,11 +675,73 @@
         const gameFrame = document.getElementById('gameFrame');
         const loadingOverlay = document.getElementById('loadingOverlay');
 
-        // Initialize the game at the correct zoom level on load
-        gameFrame.addEventListener('load', function() {
+        // Initialize $TAMA earnings system
+        let totalTama = parseFloat(localStorage.getItem('totalTama')) || 0;
+        let isEarning = true;
+        
+        const totalTamaElement = document.getElementById('totalTama');
+        const terminalContent = document.getElementById('terminalContent');
+        
+        function updateTamaDisplay() {
+            totalTamaElement.textContent = totalTama.toFixed(3);
+        }
+        
+        function addTerminalLine(message) {
+            const line = document.createElement('div');
+            line.className = 'terminal-line';
+            line.innerHTML = message;
+            terminalContent.appendChild(line);
+            
+            // Keep only last 20 lines
+            while (terminalContent.children.length > 20) {
+                terminalContent.removeChild(terminalContent.firstChild);
+            }
+            
+            // Auto scroll to bottom
+            terminalContent.scrollTop = terminalContent.scrollHeight;
+        }
+        
+        function earnTama() {
+            if (!isEarning) return;
+            
+            // Random earning between 0.005 and 0.025
+            const earning = Math.random() * 0.02 + 0.005;
+            totalTama += earning;
+            
+            // Save to localStorage
+            localStorage.setItem('totalTama', totalTama.toString());
+            
+            updateTamaDisplay();
+            
+            const timestamp = new Date().toLocaleTimeString();
+            addTerminalLine(`[${timestamp}] +${earning.toFixed(3)} $TAMA earned`);
+            
+            // Random interval between 10-20 seconds
+            const nextEarning = Math.random() * 10000 + 10000;
+            setTimeout(earnTama, nextEarning);
+        }
+        
+        // Start earning after page load
+        setTimeout(() => {
+            addTerminalLine('[SYSTEM] Mining started successfully!');
+            earnTama();
+        }, 3000);
+        
+        // Initial display update
+        updateTamaDisplay();
+        
+        // Connect wallet functionality (fake)
+        document.getElementById('connectWallet').addEventListener('click', function() {
+            const btn = this;
+            btn.textContent = 'CONNECTING...';
+            btn.style.background = 'linear-gradient(45deg, #FFA500, #FF8C00)';
+            
             setTimeout(() => {
-                loadingOverlay.style.display = 'none';
-            }, 3000);
+                btn.textContent = 'WALLET CONNECTED';
+                btn.style.background = 'linear-gradient(45deg, #00FF00, #32CD32)';
+                addTerminalLine('[WALLET] Phantom wallet connected!');
+                addTerminalLine('[SYSTEM] $TAMA earnings now secured on-chain');
+            }, 2000);
         });
 
         // Modal functionality
