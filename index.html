@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tamaweb - Virtual Pet Game</title>
+    <title>Tamaweb - Play-to-Earn Virtual Pets</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
         
         * {
             margin: 0;
@@ -13,15 +13,30 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Press Start 2P', monospace;
-            background: linear-gradient(135deg, #FFB3D1 0%, #FFE5F1 25%, #E5F3FF 50%, #D1E8FF 75%, #B3D9FF 100%);
-            min-height: 100vh;
-            overflow: hidden;
-            position: relative;
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #06ffa5;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-light: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border: #475569;
+            --success: #10b981;
+            --warning: #f59e0b;
         }
 
-        /* Animated background elements */
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a202c 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Subtle animated background */
         body::before {
             content: '';
             position: fixed;
@@ -30,16 +45,15 @@
             width: 100%;
             height: 100%;
             background-image: 
-                radial-gradient(circle at 20% 80%, rgba(255, 179, 209, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(181, 234, 255, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(255, 229, 241, 0.2) 0%, transparent 50%);
-            animation: float 6s ease-in-out infinite;
+                radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 25%);
+            animation: float 8s ease-in-out infinite alternate;
             z-index: -1;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(2deg); }
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(-20px) scale(1.02); }
         }
 
         .header {
@@ -47,131 +61,276 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
-            padding: 20px 30px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 32px;
             z-index: 1000;
-            box-shadow: 0 4px 30px rgba(255, 179, 209, 0.3);
-            border-bottom: 3px solid #FFB3D1;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .header h1 {
-            color: #FF69B4;
-            font-size: 20px;
-            font-weight: 400;
-            text-shadow: 2px 2px 0px #FF1493;
+        .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
-        .header h1::before {
-            content: '🥚';
-            animation: bounce 2s infinite;
+        .logo::before {
+            content: '◉';
+            color: var(--accent);
+            font-size: 24px;
+            animation: pulse 2s infinite;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
 
-        .header-buttons {
+        .nav-buttons {
             display: flex;
-            gap: 15px;
+            gap: 12px;
         }
 
         .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 25px;
-            background: linear-gradient(45deg, #FF69B4, #FF1493);
-            color: white;
-            font-weight: 600;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-family: 'Press Start 2P', monospace;
-            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
+            gap: 6px;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 20, 147, 0.4);
-            background: linear-gradient(45deg, #FF1493, #DC143C);
+            background: var(--bg-light);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .btn.primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .btn.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn.success {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 24px;
+            padding: 88px 32px 32px;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: calc(100vh - 56px);
+        }
+
+        .game-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
         .game-container {
-            position: fixed;
-            top: 100px;
-            left: 20px;
-            width: calc(60vw - 40px);
-            max-width: 500px;
-            height: calc(100vh - 140px);
-            max-height: 600px;
-            border: 5px solid #FF69B4;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.4);
-            background: white;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
+            flex: 1;
             position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .game-container::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #FF69B4, #FF1493, #DC143C, #FF69B4);
-            border-radius: 25px;
-            z-index: -1;
-            animation: rainbow 3s linear infinite;
+        .game-header {
+            background: var(--bg-light);
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        @keyframes rainbow {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
+        .game-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .game-status {
+            font-size: 12px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
         }
 
         .game-frame {
             width: 100%;
             height: 100%;
             border: none;
-            transform: scale(1.0);
-            transform-origin: 0 0;
-            position: relative;
+            background: #f0f0f0;
         }
 
+        .earnings-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .panel-header {
+            background: var(--bg-light);
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .earnings-display {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .earnings-amount {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .earnings-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .earnings-log {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+
+        .log-entry {
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            background: rgba(99, 102, 241, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 6px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .log-entry.earning {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .log-entry.new {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-10px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            display: flex;
+            gap: 12px;
+            z-index: 999;
+        }
+
+        .control-btn {
+            width: 48px;
+            height: 48px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(12px);
+        }
+
+        .control-btn:hover {
+            background: var(--bg-light);
+            transform: translateY(-2px);
+        }
+
+        /* Loading overlay */
         .loading-overlay {
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 179, 209, 0.95), rgba(255, 229, 241, 0.95));
+            background: rgba(15, 23, 42, 0.95);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            border-radius: 20px;
             z-index: 100;
         }
 
         .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid rgba(255, 255, 255, 0.3);
-            border-top: 6px solid #FF69B4;
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--border);
+            border-top: 2px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         @keyframes spin {
@@ -179,145 +338,12 @@
             100% { transform: rotate(360deg); }
         }
 
-        .loading-overlay p {
-            color: #FF69B4;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        /* Terminal Styles */
-        .terminal-container {
-            position: fixed;
-            top: 100px;
-            left: calc(60vw + 20px);
-            width: calc(40vw - 60px);
-            max-width: 400px;
-            min-width: 300px;
-            height: calc(100vh - 140px);
-            max-height: 600px;
-            background: linear-gradient(135deg, #FFE5F1, #F0F8FF);
-            border: 5px solid #FF69B4;
-            border-radius: 25px;
-            font-family: 'Press Start 2P', monospace;
-            padding: 20px;
-            overflow-y: auto;
-            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.4);
-            position: relative;
-        }
-
-        .terminal-container::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #FF69B4, #FF1493, #DC143C, #FF69B4);
-            border-radius: 25px;
-            z-index: -1;
-            animation: rainbow 3s linear infinite;
-        }
-
-        .terminal-header {
-            color: #FF69B4;
-            font-size: 12px;
-            margin-bottom: 15px;
-            text-align: center;
-            border-bottom: 2px solid #FFB3D1;
-            padding-bottom: 10px;
-            text-shadow: 1px 1px 0px #FF1493;
-        }
-
-        .terminal-content {
-            color: #666;
-            font-size: 10px;
-            line-height: 1.6;
-        }
-
-        .terminal-line {
-            margin-bottom: 8px;
-            padding: 5px 8px;
-            background: rgba(255, 179, 209, 0.1);
-            border-radius: 8px;
-            border-left: 3px solid #FFB3D1;
-        }
-
-        .earnings-display {
-            color: #FF1493;
-            font-weight: bold;
+        .loading-text {
+            color: var(--text-secondary);
             font-size: 14px;
-            margin: 15px 0;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(255, 179, 209, 0.3), rgba(255, 229, 241, 0.3));
-            padding: 15px;
-            border-radius: 15px;
-            border: 2px solid #FF69B4;
-            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2);
-            text-shadow: 1px 1px 0px rgba(255, 20, 147, 0.3);
         }
 
-        .earning-line {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 229, 241, 0.2));
-            border-left: 3px solid #FFD700;
-            color: #E6007E;
-            animation: glow 2s ease-in-out;
-        }
-
-        @keyframes glow {
-            0% { background: linear-gradient(135deg, rgba(255, 215, 0, 0.4), rgba(255, 229, 241, 0.4)); }
-            100% { background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 229, 241, 0.1)); }
-        }
-
-        .status-line {
-            background: linear-gradient(135deg, rgba(181, 234, 255, 0.2), rgba(255, 229, 241, 0.2));
-            border-left: 3px solid #B5EAFF;
-            color: #0066CC;
-        }
-            position: fixed;
-            left: 30px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            z-index: 999;
-        }
-
-        .floating-btn {
-            width: 70px;
-            height: 70px;
-            border-radius: 8px;
-            background: linear-gradient(45deg, #FF69B4, #FF1493);
-            border: 3px solid #FF1493;
-            color: white;
-            font-size: 24px;
-            font-family: 'Press Start 2P', monospace;
-            cursor: pointer;
-            box-shadow: 4px 4px 0px #C41E3A;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .floating-btn:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0px #C41E3A;
-        }
-
-        .floating-buttons-right {
-            position: fixed;
-            right: 30px;
-            bottom: 30px;
-            display: flex;
-            flex-direction: row;
-            gap: 15px;
-            z-index: 999;
-        }
-
-        /* Modal Styles */
+        /* Modal styles */
         .modal {
             display: none;
             position: fixed;
@@ -326,521 +352,335 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 179, 209, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
         }
 
         .modal-content {
-            background: linear-gradient(135deg, #FFE5F1, #F0F8FF);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
             margin: 5% auto;
-            padding: 30px;
-            border: 3px solid #FF69B4;
-            border-radius: 25px;
+            padding: 24px;
+            border-radius: 12px;
             width: 90%;
             max-width: 600px;
-            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.4);
-            animation: modalSlideIn 0.3s ease-out;
             max-height: 80vh;
             overflow-y: auto;
-        }
-
-        @keyframes modalSlideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
 
         .modal h3 {
-            color: #FF69B4;
-            font-size: 28px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 700;
-        }
-
-        .modal p, .modal li {
-            color: #666;
-            line-height: 1.8;
-            font-size: 16px;
-            margin-bottom: 12px;
-        }
-
-        .modal ul {
-            padding-left: 25px;
-        }
-
-        .close {
-            color: #FF69B4;
-            float: right;
-            font-size: 35px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .close:hover {
-            color: #FF1493;
-            transform: scale(1.2);
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid #FFB3D1;
-            box-shadow: 0 5px 15px rgba(255, 179, 209, 0.3);
-        }
-
-        .feature-card h4 {
-            color: #FF69B4;
-            font-size: 18px;
-            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-size: 20px;
+            margin-bottom: 16px;
             font-weight: 600;
         }
 
-        @media (max-width: 768px) {
-            .floating-buttons,
-            .floating-buttons-right {
-                display: none;
-            }
-            
-            .game-container {
-                top: 80px;
-                left: 10px;
-                width: 95vw;
-                max-width: none;
-                height: 60vh;
+        .modal p, .modal li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .close {
+            color: var(--text-secondary);
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .close:hover {
+            color: var(--text-primary);
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr auto;
+                gap: 16px;
             }
 
-            .terminal-container {
-                top: calc(60vh + 100px);
-                left: 10px;
-                right: 10px;
-                width: calc(100vw - 20px);
-                max-width: none;
-                height: calc(40vh - 80px);
-                max-height: none;
+            .earnings-panel {
+                max-height: 300px;
             }
-            
+        }
+
+        @media (max-width: 768px) {
             .header {
-                padding: 15px 20px;
+                padding: 12px 16px;
             }
-            
-            .header h1 {
-                font-size: 24px;
+
+            .nav-buttons {
+                gap: 8px;
             }
 
             .btn {
-                padding: 10px 16px;
-                font-size: 14px;
+                padding: 6px 12px;
+                font-size: 11px;
+            }
+
+            .main-content {
+                padding: 76px 16px 16px;
+                gap: 12px;
+            }
+
+            .controls {
+                bottom: 16px;
+                right: 16px;
             }
 
             .modal-content {
                 margin: 10% auto;
+                padding: 16px;
                 width: 95%;
-                padding: 20px;
-            }
-
-            /* Mobile floating action buttons */
-            .mobile-fab {
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                display: flex;
-                gap: 15px;
-                z-index: 999;
-            }
-
-            .mobile-fab .floating-btn {
-                width: 60px;
-                height: 60px;
-                font-size: 20px;
             }
         }
 
-        /* Desktop only - hide mobile FAB */
-        @media (min-width: 769px) {
-            .mobile-fab {
-                display: none;
-            }
+        /* Custom scrollbar */
+        .earnings-log::-webkit-scrollbar {
+            width: 6px;
         }
 
-        /* Scrollbar styling for modal */
-        .modal-content::-webkit-scrollbar {
-            width: 8px;
+        .earnings-log::-webkit-scrollbar-track {
+            background: var(--bg-dark);
         }
 
-        .modal-content::-webkit-scrollbar-track {
-            background: rgba(255, 179, 209, 0.2);
-            border-radius: 10px;
+        .earnings-log::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
         }
 
-        .modal-content::-webkit-scrollbar-thumb {
-            background: #FF69B4;
-            border-radius: 10px;
+        .earnings-log::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <h1>Tamaweb</h1>
-        <div class="header-buttons">
-            <button id="connectWallet" class="btn">
-                CONNECT WALLET
-            </button>
-            <a href="https://pump.fun" target="_blank" class="btn">
-                PUMP.FUN
-            </a>
-            <a href="#" target="_blank" class="btn">
-                DOCS
-            </a>
-            <a href="https://twitter.com" target="_blank" class="btn">
-                TWITTER
-            </a>
-        </div>
+        <div class="logo">TAMAWEB</div>
+        <nav class="nav-buttons">
+            <button id="connectWallet" class="btn primary">CONNECT WALLET</button>
+            <a href="https://pump.fun" target="_blank" class="btn">PUMP.FUN</a>
+            <a href="#" target="_blank" class="btn">DOCS</a>
+            <a href="https://twitter.com" target="_blank" class="btn">TWITTER</a>
+        </nav>
     </header>
 
-    <!-- Terminal Container -->
-    <div class="terminal-container">
-        <div class="terminal-header">
-            ✨ $TAMA EARNINGS ✨
-        </div>
-        <div class="earnings-display">
-            💰 Total $TAMA: <span id="totalTama">0.000</span> 💰
-        </div>
-        <div class="terminal-content" id="terminalContent">
-            <div class="terminal-line status-line">🌟 Welcome to TAMAWEB P2E!</div>
-            <div class="terminal-line status-line">🎮 Caring for pets = earning $TAMA</div>
-            <div class="terminal-line status-line">💖 Pet happiness is mining...</div>
-        </div>
-    </div>
-
-    <div class="floating-buttons-right">
-        <button class="floating-btn" id="infoBtn" title="Game Info">
-            i
-        </button>
-    </div>
-
-    <!-- Mobile floating action buttons -->
-    <div class="mobile-fab">
-        <button class="floating-btn" id="howToPlayBtnMobile" title="How to Play">
-            ?
-        </button>
-        <button class="floating-btn" id="featuresBtnMobile" title="Features">
-            ★
-        </button>
-    </div>
-
-    <div class="game-container" id="gameContainer">
-        <iframe 
-            id="gameFrame"
-            class="game-frame" 
-            src="https://autosam.github.io/Tamaweb/"
-            allowfullscreen
-            allow="autoplay; fullscreen; microphone; camera; clipboard-read; clipboard-write">
-        </iframe>
-        <div class="loading-overlay" id="loadingOverlay">
-            <div class="spinner"></div>
-            <p>Hatching your virtual pet... 🥚✨</p>
-        </div>
-    </div>
-
-    <!-- How to Play Modal -->
-    <div id="howToPlayModal" class="modal">
-        <div class="modal-content">
-            <span class="close" data-modal="howToPlayModal">&times;</span>
-            <h3>🎮 How to Play Tamaweb</h3>
-            
-            <div style="background: rgba(255, 179, 209, 0.2); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
-                <p><strong>🥚 Welcome to your new virtual pet adventure!</strong></p>
-                <p>Just like a real Tamagotchi, your pet needs constant care and attention to grow happy and healthy!</p>
-            </div>
-
-            <ul style="font-size: 16px; line-height: 2;">
-                <li><strong>🍎 Feed your pet:</strong> Keep them well-fed with different foods to maintain their health and happiness</li>
-                <li><strong>🎯 Play mini-games:</strong> Earn coins and keep your pet entertained with fun arcade games</li>
-                <li><strong>🧹 Clean up:</strong> Remove waste to keep your pet's environment clean and prevent sickness</li>
-                <li><strong>💤 Sleep schedule:</strong> Make sure your pet gets enough rest - they have their own bedtime!</li>
-                <li><strong>🎭 Watch them evolve:</strong> Different care patterns lead to different evolution paths</li>
-                <li><strong>👥 Make friends:</strong> Connect with other players and visit their pets</li>
-                <li><strong>🎨 Customize:</strong> Decorate their room and dress them up with cute accessories</li>
-                <li><strong>🌱 Garden:</strong> Plant and grow your own food to feed your pet</li>
-            </ul>
-
-            <div style="background: rgba(255, 229, 241, 0.8); padding: 15px; border-radius: 10px; margin-top: 20px;">
-                <p><strong>💡 Pro Tip:</strong> The better you care for your pet, the more special evolutions you'll unlock!</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Features Modal -->
-    <div id="featuresModal" class="modal">
-        <div class="modal-content">
-            <span class="close" data-modal="featuresModal">&times;</span>
-            <h3>⭐ Amazing Features</h3>
-            
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h4>💰 Play-to-Earn</h4>
-                    <p>Earn $TAMA tokens while playing! Every action - feeding, playing, caring - generates real cryptocurrency rewards on the Solana blockchain.</p>
+    <main class="main-content">
+        <section class="game-section">
+            <div class="game-container">
+                <div class="game-header">
+                    <div class="game-title">Virtual Pet Game</div>
+                    <div class="game-status">
+                        <span class="status-dot"></span>
+                        LIVE
+                    </div>
                 </div>
-
-                <div class="feature-card">
-                    <h4>🔗 Web3 Integration</h4>
-                    <p>Connect your Solana wallet to track earnings, trade tokens, and truly own your virtual pets as NFTs with blockchain verification.</p>
-                </div>
-
-                <div class="feature-card">
-                    <h4>🎪 Earning Games</h4>
-                    <p>Play mini-games to earn bonus $TAMA tokens! Higher scores = higher rewards. Compete with other players for leaderboard prizes.</p>
-                </div>
-
-                <div class="feature-card">
-                    <h4>🏆 NFT Pets</h4>
-                    <p>Your pets are unique NFTs that can be traded, sold, or collected. Rare evolutions and special traits increase their value!</p>
-                </div>
-
-                <div class="feature-card">
-                    <h4>👫 Social Features</h4>
-                    <p>Connect with friends, visit other players' pets, and even arrange marriages between pets!</p>
-                </div>
-
-                <div class="feature-card">
-                    <h4>🌱 Gardening</h4>
-                    <p>Grow your own plants and harvest ingredients to create special meals for your pet!</p>
-                </div>
-
-                <div class="feature-card">
-                    <h4>🎭 Modding Support</h4>
-                    <p>Create and install custom content including new characters, backgrounds, and items!</p>
-                </div>
-
-                <div class="feature-card">
-                    <h4>📱 Cross-Platform</h4>
-                    <p>Play on web, mobile, or desktop. Your progress syncs across all devices!</p>
+                <iframe 
+                    id="gameFrame"
+                    class="game-frame" 
+                    src="https://autosam.github.io/Tamaweb/"
+                    allowfullscreen
+                    allow="autoplay; fullscreen; microphone; camera; clipboard-read; clipboard-write">
+                </iframe>
+                <div class="loading-overlay" id="loadingOverlay">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Loading virtual pet environment...</div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <section class="earnings-panel">
+            <div class="panel-header">
+                <div class="panel-title">$TAMA Earnings</div>
+                <div style="font-size: 12px; color: var(--accent);">SOLANA</div>
+            </div>
+            <div class="earnings-display">
+                <div class="earnings-amount" id="totalTama">0.000</div>
+                <div class="earnings-label">Total $TAMA Earned</div>
+            </div>
+            <div class="earnings-log" id="earningsLog">
+                <div class="log-entry">System initialized</div>
+                <div class="log-entry">Connecting to Solana network...</div>
+                <div class="log-entry">Ready to earn $TAMA tokens</div>
+            </div>
+        </section>
+    </main>
+
+    <div class="controls">
+        <button class="control-btn" id="infoBtn" title="Game Info">ⓘ</button>
+        <button class="control-btn" id="helpBtn" title="How to Play">?</button>
     </div>
 
     <!-- Info Modal -->
     <div id="infoModal" class="modal">
         <div class="modal-content">
             <span class="close" data-modal="infoModal">&times;</span>
-            <h3>ℹ️ About Tamaweb P2E</h3>
-            
-            <div style="text-align: center; margin-bottom: 25px;">
-                <div style="font-size: 60px; margin-bottom: 15px;">💰</div>
-                <p style="font-size: 18px; color: #FF69B4; font-weight: 600;">Play-to-Earn Virtual Pets on Solana</p>
-            </div>
-
+            <h3>About Tamaweb P2E</h3>
             <p>Tamaweb is a revolutionary play-to-earn virtual pet game built on the Solana blockchain. Earn $TAMA tokens while caring for your digital companions in this next-generation Web3 gaming experience.</p>
+            
+            <h4 style="color: var(--primary); margin: 20px 0 10px 0;">Key Features</h4>
+            <ul style="padding-left: 20px;">
+                <li>Earn $TAMA tokens through pet care activities</li>
+                <li>Built on Solana for fast, low-cost transactions</li>
+                <li>True ownership of virtual pets as NFTs</li>
+                <li>Trade tokens on decentralized exchanges</li>
+                <li>Stake tokens for additional rewards</li>
+            </ul>
+        </div>
+    </div>
 
-            <div style="background: linear-gradient(135deg, rgba(255, 179, 209, 0.3), rgba(229, 243, 255, 0.3)); padding: 20px; border-radius: 15px; margin: 20px 0;">
-                <h4 style="color: #FF69B4; margin-bottom: 10px;">🌟 Web3 Features</h4>
-                <ul>
-                    <li>💰 Earn $TAMA tokens by playing and caring for pets</li>
-                    <li>🏦 Built on Solana for fast, low-cost transactions</li>
-                    <li>🎮 True ownership of your virtual pets as NFTs</li>
-                    <li>🔗 Connect your Phantom or Solflare wallet</li>
-                    <li>💱 Trade $TAMA on DEXs and exchanges</li>
-                    <li>🎯 Stake your tokens for additional rewards</li>
-                </ul>
-            </div>
-
-            <p style="text-align: center; margin-top: 25px; font-style: italic; color: #666;">
-                "The future of virtual pet games - where caring pays!"
-            </p>
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="close" data-modal="helpModal">&times;</span>
+            <h3>How to Play & Earn</h3>
+            <p>Care for your virtual pet to earn $TAMA tokens on the Solana blockchain.</p>
+            
+            <h4 style="color: var(--primary); margin: 20px 0 10px 0;">Earning Activities</h4>
+            <ul style="padding-left: 20px;">
+                <li>Feed your pet regularly for feeding rewards</li>
+                <li>Play mini-games for bonus tokens</li>
+                <li>Keep your pet happy for happiness bonuses</li>
+                <li>Clean and care for consistent earning rates</li>
+                <li>Complete daily challenges for extra rewards</li>
+            </ul>
+            
+            <h4 style="color: var(--primary); margin: 20px 0 10px 0;">Token Utility</h4>
+            <ul style="padding-left: 20px;">
+                <li>Trade $TAMA on DEXs like Jupiter and Raydium</li>
+                <li>Stake tokens for passive income</li>
+                <li>Purchase rare pet items and accessories</li>
+                <li>Unlock premium game features</li>
+            </ul>
         </div>
     </div>
 
     <script>
+        // Game loading
         const gameFrame = document.getElementById('gameFrame');
         const loadingOverlay = document.getElementById('loadingOverlay');
 
-        // Initialize the game at the correct zoom level on load
         gameFrame.addEventListener('load', function() {
             setTimeout(() => {
                 loadingOverlay.style.display = 'none';
-            }, 3000);
+            }, 2000);
         });
 
-        // Initialize $TAMA earnings system
+        // $TAMA earnings system
         let totalTama = parseFloat(localStorage.getItem('totalTama')) || 0;
-        let isEarning = true;
-        
         const totalTamaElement = document.getElementById('totalTama');
-        const terminalContent = document.getElementById('terminalContent');
-        
+        const earningsLog = document.getElementById('earningsLog');
+
         function updateTamaDisplay() {
             totalTamaElement.textContent = totalTama.toFixed(3);
         }
-        
-        function addTerminalLine(message, type = 'default') {
-            const line = document.createElement('div');
-            line.className = `terminal-line ${type === 'earning' ? 'earning-line' : type === 'status' ? 'status-line' : ''}`;
-            line.innerHTML = message;
-            terminalContent.appendChild(line);
+
+        function addLogEntry(message, isEarning = false) {
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${isEarning ? 'earning' : ''} new`;
             
-            // Keep only last 15 lines
-            while (terminalContent.children.length > 15) {
-                terminalContent.removeChild(terminalContent.firstChild);
+            const timestamp = new Date().toLocaleTimeString();
+            entry.textContent = `${timestamp} - ${message}`;
+            
+            earningsLog.appendChild(entry);
+            
+            // Keep only last 20 entries
+            while (earningsLog.children.length > 20) {
+                earningsLog.removeChild(earningsLog.firstChild);
             }
             
-            // Auto scroll to bottom
-            terminalContent.scrollTop = terminalContent.scrollHeight;
+            earningsLog.scrollTop = earningsLog.scrollHeight;
         }
-        
+
         function earnTama() {
-            if (!isEarning) return;
-            
-            // Random earning between 0.005 and 0.025
             const earning = Math.random() * 0.02 + 0.005;
             totalTama += earning;
-            
-            // Save to localStorage
             localStorage.setItem('totalTama', totalTama.toString());
             
             updateTamaDisplay();
             
-            const timestamp = new Date().toLocaleTimeString();
-            const messages = [
-                `💝 Pet gave you +${earning.toFixed(3)} $TAMA!`,
-                `🎮 Game reward: +${earning.toFixed(3)} $TAMA`,
-                `🌈 Happy pet bonus: +${earning.toFixed(3)} $TAMA`,
-                `✨ Love energy: +${earning.toFixed(3)} $TAMA`,
-                `🍎 Feeding reward: +${earning.toFixed(3)} $TAMA`,
-                `🎯 Play bonus: +${earning.toFixed(3)} $TAMA`
+            const activities = [
+                'Pet care reward',
+                'Feeding bonus',
+                'Happiness mining',
+                'Play activity',
+                'Care bonus',
+                'Daily reward'
             ];
-            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-            addTerminalLine(`${timestamp} - ${randomMessage}`, 'earning');
             
-            // Random interval between 10-20 seconds
-            const nextEarning = Math.random() * 10000 + 10000;
+            const activity = activities[Math.floor(Math.random() * activities.length)];
+            addLogEntry(`${activity}: +${earning.toFixed(3)} $TAMA`, true);
+            
+            // Next earning in 12-18 seconds
+            const nextEarning = Math.random() * 6000 + 12000;
             setTimeout(earnTama, nextEarning);
         }
-        
-        // Start earning after 10 seconds of user being on site
+
+        // Start earning after 10 seconds
         setTimeout(() => {
-            addTerminalLine('🚀 Pet care mining started!', 'status');
+            addLogEntry('Earnings system activated');
             earnTama();
         }, 10000);
-        
-        // Initial display update
+
         updateTamaDisplay();
-        
-        // Connect wallet functionality (fake)
+
+        // Wallet connection
         document.getElementById('connectWallet').addEventListener('click', function() {
             const btn = this;
             btn.textContent = 'CONNECTING...';
-            btn.style.background = 'linear-gradient(45deg, #FFA500, #FF8C00)';
+            btn.style.background = 'var(--warning)';
             
             setTimeout(() => {
                 btn.textContent = 'WALLET CONNECTED';
-                btn.style.background = 'linear-gradient(45deg, #00FF00, #32CD32)';
-                addTerminalLine('💎 Phantom wallet connected!', 'status');
-                addTerminalLine('🔒 $TAMA secured on Solana!', 'status');
+                btn.style.background = 'var(--success)';
+                addLogEntry('Phantom wallet connected');
+                addLogEntry('Earnings secured on-chain');
             }, 2000);
         });
 
         // Modal functionality
-        const modals = document.querySelectorAll('.modal');
-        const modalTriggers = {
-            'howToPlayBtn': 'howToPlayModal',
-            'howToPlayBtnMobile': 'howToPlayModal',
-            'featuresBtn': 'featuresModal',
-            'featuresBtnMobile': 'featuresModal',
-            'infoBtn': 'infoModal'
+        const modals = {
+            'infoBtn': 'infoModal',
+            'helpBtn': 'helpModal'
         };
 
-        // Open modals
-        Object.entries(modalTriggers).forEach(([btnId, modalId]) => {
-            const btn = document.getElementById(btnId);
-            const modal = document.getElementById(modalId);
-            
-            if (btn && modal) {
-                btn.addEventListener('click', () => {
-                    modal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
-                });
-            }
+        Object.entries(modals).forEach(([btnId, modalId]) => {
+            document.getElementById(btnId).addEventListener('click', () => {
+                document.getElementById(modalId).style.display = 'block';
+            });
         });
 
-        // Close modals
         document.querySelectorAll('.close').forEach(closeBtn => {
             closeBtn.addEventListener('click', () => {
                 const modalId = closeBtn.getAttribute('data-modal');
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = '';
-                }
+                document.getElementById(modalId).style.display = 'none';
             });
         });
 
-        // Close modal when clicking outside
-        modals.forEach(modal => {
+        document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     modal.style.display = 'none';
-                    document.body.style.overflow = '';
                 }
             });
         });
 
-        // Keyboard shortcuts for modals
+        // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                modals.forEach(modal => {
+                document.querySelectorAll('.modal').forEach(modal => {
                     modal.style.display = 'none';
-                    document.body.style.overflow = '';
                 });
-            } else if (e.key === 'h' || e.key === 'H') {
-                document.getElementById('howToPlayModal').style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            } else if (e.key === 'f' || e.key === 'F') {
-                document.getElementById('featuresModal').style.display = 'block';
-                document.body.style.overflow = 'hidden';
             }
         });
 
-        // Auto-hide loading after a maximum time
-        setTimeout(() => {
-            if (loadingOverlay.style.display !== 'none') {
-                loadingOverlay.style.display = 'none';
-            }
-        }, 10000);
-
-        // Remove mouse trail functionality
-        // Enhanced particle effects removed for cleaner experience
-
-        // Add particle animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes particleFade {
-                0% { 
-                    opacity: 1; 
-                    transform: scale(1) translateY(0); 
-                }
-                100% { 
-                    opacity: 0; 
-                    transform: scale(2) translateY(-30px); 
-                }
-            }
-        `;
-        document.head.appendChild(style);
-
-        console.log('🎮 Tamaweb Embedded Player Ready!');
-        console.log('⌨️ Keyboard shortcuts:');
-        console.log('  H - How to Play modal');
-        console.log('  F - Features modal');
-        console.log('  ESC - Close any modal');
+        console.log('🎮 Tamaweb P2E Ready');
+        console.log('💰 Earning $TAMA on Solana');
     </script>
 </body>
 </html>
