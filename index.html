@@ -122,7 +122,7 @@
             position: fixed;
             top: 100px;
             left: 20px;
-            width: 55vw;
+            width: calc(60vw - 40px);
             max-width: 500px;
             height: calc(100vh - 120px);
             max-height: 700px;
@@ -201,11 +201,12 @@
         .terminal-container {
             position: fixed;
             top: 100px;
-            right: 20px;
-            width: 40vw;
+            left: calc(60vw + 20px);
+            width: calc(40vw - 60px);
             max-width: 400px;
+            min-width: 300px;
             height: calc(100vh - 120px);
-            max-height: 350px;
+            max-height: 700px;
             background: linear-gradient(135deg, #FFE5F1, #F0F8FF);
             border: 5px solid #FF69B4;
             border-radius: 25px;
@@ -520,15 +521,15 @@
     <!-- Terminal Container -->
     <div class="terminal-container">
         <div class="terminal-header">
-            === $TAMA EARNINGS TERMINAL ===
+            ✨ $TAMA EARNINGS ✨
         </div>
         <div class="earnings-display">
-            Total $TAMA: <span id="totalTama">0.000</span>
+            💰 Total $TAMA: <span id="totalTama">0.000</span> 💰
         </div>
         <div class="terminal-content" id="terminalContent">
-            <div class="terminal-line">[SYSTEM] Welcome to TAMAWEB P2E!</div>
-            <div class="terminal-line">[INFO] Earning $TAMA tokens on Solana...</div>
-            <div class="terminal-line">[STATUS] Mining active <span class="cursor">_</span></div>
+            <div class="terminal-line status-line">🌟 Welcome to TAMAWEB P2E!</div>
+            <div class="terminal-line status-line">🎮 Caring for pets = earning $TAMA</div>
+            <div class="terminal-line status-line">💖 Pet happiness is mining...</div>
         </div>
     </div>
 
@@ -686,14 +687,14 @@
             totalTamaElement.textContent = totalTama.toFixed(3);
         }
         
-        function addTerminalLine(message) {
+        function addTerminalLine(message, type = 'default') {
             const line = document.createElement('div');
-            line.className = 'terminal-line';
+            line.className = `terminal-line ${type === 'earning' ? 'earning-line' : type === 'status' ? 'status-line' : ''}`;
             line.innerHTML = message;
             terminalContent.appendChild(line);
             
-            // Keep only last 20 lines
-            while (terminalContent.children.length > 20) {
+            // Keep only last 15 lines
+            while (terminalContent.children.length > 15) {
                 terminalContent.removeChild(terminalContent.firstChild);
             }
             
@@ -714,7 +715,16 @@
             updateTamaDisplay();
             
             const timestamp = new Date().toLocaleTimeString();
-            addTerminalLine(`[${timestamp}] +${earning.toFixed(3)} $TAMA earned`);
+            const messages = [
+                `💝 Pet gave you +${earning.toFixed(3)} $TAMA!`,
+                `🎮 Game reward: +${earning.toFixed(3)} $TAMA`,
+                `🌈 Happy pet bonus: +${earning.toFixed(3)} $TAMA`,
+                `✨ Love energy: +${earning.toFixed(3)} $TAMA`,
+                `🍎 Feeding reward: +${earning.toFixed(3)} $TAMA`,
+                `🎯 Play bonus: +${earning.toFixed(3)} $TAMA`
+            ];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            addTerminalLine(`${timestamp} - ${randomMessage}`, 'earning');
             
             // Random interval between 10-20 seconds
             const nextEarning = Math.random() * 10000 + 10000;
@@ -723,7 +733,7 @@
         
         // Start earning after page load
         setTimeout(() => {
-            addTerminalLine('[SYSTEM] Mining started successfully!');
+            addTerminalLine('🚀 Pet care mining started!', 'status');
             earnTama();
         }, 3000);
         
@@ -739,8 +749,8 @@
             setTimeout(() => {
                 btn.textContent = 'WALLET CONNECTED';
                 btn.style.background = 'linear-gradient(45deg, #00FF00, #32CD32)';
-                addTerminalLine('[WALLET] Phantom wallet connected!');
-                addTerminalLine('[SYSTEM] $TAMA earnings now secured on-chain');
+                addTerminalLine('💎 Phantom wallet connected!', 'status');
+                addTerminalLine('🔒 $TAMA secured on Solana!', 'status');
             }, 2000);
         });
 
